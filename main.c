@@ -28,12 +28,6 @@ int main(void) {
 		else if (sdata.IRSensor[2] >= 158) {
 			sdata = left(speed, sdata);
 		}
-		else if (sdata.CDSSensor <= 100)
-		{
-			g0(0);
-			delay(3000);
-			go(300);
-		}
 	}
 
 	go(0);
@@ -91,4 +85,14 @@ SensorData right(int speed, SensorData sdata) {
 	Led(0x0000);
 
 	return sdata;
+}
+
+void CDS(int speed, SensorData sdata)
+{
+	if (sdata.CDSSensor <= 100)
+	{
+		go(0, 0);
+		delay(3000);
+		go(speed);
+	}
 }
