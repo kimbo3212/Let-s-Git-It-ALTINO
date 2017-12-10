@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "Altino.h"
 
-#define irsensor1 170          // ±âº»°ª + 13
-#define irsensor2 165          // ±âº»°ª
-#define irsensor3 190          // ±âº»°ª + 30
-#define irsensor4 600          // ÃøÁ¤°ª
+#define irsensor1 170          // ï¿½âº»ï¿½ï¿½ + 13
+#define irsensor2 165          // ï¿½âº»ï¿½ï¿½
+#define irsensor3 190          // ï¿½âº»ï¿½ï¿½ + 30
+#define irsensor4 600          // ï¿½ï¿½ï¿½ï¿½ï¿½
 #define irsensor5 400
 
 void go(int speed);
@@ -13,6 +13,8 @@ SensorData straight(int speed, SensorData sdata);
 SensorData right(int speed, SensorData sdata);
 void CDS(int speed, SensorData sdata);
 SensorData Back(int speed, SensorData sdata);
+void Gobacksound();
+SensorData GoBack(int backSpeed, SensorData sdata);
 
 int main(void) {
 	SensorData sdata;
@@ -31,6 +33,7 @@ int main(void) {
 			sdata = Back(speed, sdata);
 		}
 		else if (sdata.IRSensor[0] < irsensor1 && sdata.IRSensor[0] > irsensor2 && sdata.IRSensor[4] <= irsensor5) {
+
 			sdata = straight(speed, sdata);
 		}
 		else if ((sdata.IRSensor[0] >= irsensor1 && sdata.IRSensor[0] <= irsensor3) || sdata.IRSensor[0] <= 0 || (sdata.IRSensor[4] > irsensor5 && sdata.IRSensor[4] <= irsensor4)) {
@@ -94,7 +97,7 @@ SensorData right(int speed, SensorData sdata) {
 
 	while ((sdata.IRSensor[0] >= irsensor1 && sdata.IRSensor[0] <= irsensor3) || sdata.IRSensor[0] <= 0 || (sdata.IRSensor[4] > irsensor5 && sdata.IRSensor[4] <= irsensor4)) {
 		sdata = Sensor(1);
-		if (sdata.IRSensor[0] <= irsensor2 - 6) {           // ±âº»°ª
+		if (sdata.IRSensor[0] <= irsensor2 - 6) {           // ï¿½âº»ï¿½ï¿½
 			count++;
 		}
 		if (count >= 5) {
@@ -124,7 +127,6 @@ void CDS(int speed, SensorData sdata)
 		go(speed);
 	}
 }
-
 SensorData Back(int speed, SensorData sdata) {
 	Steering(2);
 	speed += 50;
@@ -137,4 +139,220 @@ SensorData Back(int speed, SensorData sdata) {
 	}
 
 	return sdata;
+void Gobacksound()
+{
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(200);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(1000);
+	Sound(0);
+	delay(100);
+
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100); 
+	Sound(41);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100); 
+	Sound(41);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(39);//ï¿½ï¿½
+	delay(400);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100); 
+	Sound(41);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100); 
+	Sound(41);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(39);//ï¿½ï¿½
+	delay(2000);
+	Sound(0);
+	delay(100);
+	
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(200);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(1000);
+	Sound(0);
+	delay(100);
+
+	Sound(44);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(39);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(37);//ï¿½ï¿½
+	delay(300);
+  
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(39);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(41);//ï¿½ï¿½
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(37);//ï¿½ï¿½
+	delay(1500);
+	Sound(0);
+	delay(100);
+  
+	Sound(44);
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);
+	delay(100);
+	Sound(0);
+	delay(100);
+}
 }
