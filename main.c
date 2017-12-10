@@ -9,6 +9,8 @@ void go(int speed);
 SensorData left(int speed, SensorData sdata);
 SensorData straight(int speed, SensorData sdata);
 SensorData right(int speed, SensorData sdata);
+void Gobacksound();
+SensorData GoBack(int backSpeed, SensorData sdata);
 
 int main(void) {
 	SensorData sdata;
@@ -98,5 +100,45 @@ void CDS(int speed, SensorData sdata)
 		go(0, 0);
 		delay(3000);
 		go(speed);
+	}
+}
+
+void Gobacksound()
+{
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(41);
+	delay(500);
+	Sound(0);
+	delay(100);
+}
+
+SensorData GoBack(int backSpeed, SensorData sdata)
+{
+	if (sdata.IRSensor[0] == 0 || sdata.IRSensor[1] == 0 || sdata.IRSensor[2] == 0) {
+		sdata = straight(backSpeed, sdata);
+		delay(5000);
 	}
 }
