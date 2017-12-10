@@ -10,6 +10,7 @@ SensorData left(int speed, SensorData sdata);
 SensorData straight(int speed, SensorData sdata);
 SensorData right(int speed, SensorData sdata);
 void Gobacksound();
+SensorData GoBack(int backSpeed, SensorData sdata);
 
 int main(void) {
 	SensorData sdata;
@@ -22,6 +23,8 @@ int main(void) {
 
 	while (1) {
 		sdata = Sensor(1);
+
+		GoBacksound();
 
 		printf("%d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[1], sdata.IRSensor[2]);
 		if (sdata.IRSensor[0] < irsensor1 && sdata.IRSensor[0] > irsensor2) {
@@ -104,32 +107,140 @@ void CDS(int speed, SensorData sdata)
 
 void Gobacksound()
 {
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//��
+	delay(200);
+	Sound(0);
+	delay(100);
+
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100); 
+	Sound(41);//��
+	delay(100);
+	Sound(0);
+	delay(100); 
+	Sound(41);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(39);//��
+	delay(400);
+	Sound(0);
+	delay(100);
+	
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(46);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//��
+	delay(200);
+	Sound(0);
+	delay(100);
+
+	Sound(44);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(39);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(41);//��
+	delay(100);
+	Sound(0);
+	delay(100);
+	Sound(37);//��
+	delay(300);
+	Sound(0);
+	delay(100);
+  
 	Sound(44);
-	delay(500);
+	delay(100);
 	Sound(0);
 	delay(100);
 	Sound(44);
-	delay(500);
+	delay(100);
 	Sound(0);
 	delay(100);
 	Sound(46);
-	delay(500);
+	delay(100);
 	Sound(0);
 	delay(100);
 	Sound(46);
-	delay(500);
+	delay(100);
 	Sound(0);
 	delay(100);
 	Sound(44);
-	delay(500);
+	delay(100);
 	Sound(0);
 	delay(100);
 	Sound(44);
-	delay(500);
+	delay(100);
 	Sound(0);
 	delay(100);
 	Sound(41);
-	delay(500);
+	delay(100);
 	Sound(0);
 	delay(100);
+}
+
+SensorData GoBack(int backSpeed, SensorData sdata)
+{
+	if (sdata.IRSensor[0] == 0 || sdata.IRSensor[1] == 0 || sdata.IRSensor[2] == 0) {
+		sdata = straight(backSpeed, sdata);
+		delay(5000);
+	}
 }
