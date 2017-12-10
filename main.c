@@ -10,6 +10,7 @@ SensorData left(int speed, SensorData sdata);
 SensorData straight(int speed, SensorData sdata);
 SensorData right(int speed, SensorData sdata);
 void Gobacksound();
+SensorData GoBack(int backSpeed, SensorData sdata);
 
 int main(void) {
 	SensorData sdata;
@@ -132,4 +133,12 @@ void Gobacksound()
 	delay(500);
 	Sound(0);
 	delay(100);
+}
+
+SensorData GoBack(int backSpeed, SensorData sdata)
+{
+	if (sdata.IRSensor[0] == 0 || sdata.IRSensor[1] == 0 || sdata.IRSensor[2] == 0) {
+		sdata = straight(backSpeed, sdata);
+		delay(5000);
+	}
 }
