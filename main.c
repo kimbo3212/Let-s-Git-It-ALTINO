@@ -105,106 +105,134 @@ void CDS(int speed, SensorData sdata)
 
 void Gobacksound()
 {
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//¶ó
+	Sound(46);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//¶ó
+	Sound(46);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//¹Ì
+	Sound(41);//ï¿½ï¿½
 	delay(1000);
 	Sound(0);
 	delay(100);
 
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100); 
-	Sound(41);//¹Ì
+	Sound(41);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100); 
-	Sound(41);//¹Ì
+	Sound(41);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(39);//·¹
+	Sound(39);//ï¿½ï¿½
 	delay(2000);
 	Sound(0);
 	delay(100);
 	
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//¶ó
+	Sound(46);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//¶ó
+	Sound(46);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//¹Ì
+	Sound(41);//ï¿½ï¿½
 	delay(1000);
 	Sound(0);
 	delay(100);
 
-	Sound(44);//¼Ö
+	Sound(44);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//¹Ì
+	Sound(41);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(39);//·¹
+	Sound(39);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//¹Ì
+	Sound(41);//ï¿½ï¿½
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(37);//µµ
+	Sound(37);//ï¿½ï¿½
 	delay(1500);
 	Sound(0);
 	delay(100);
-
+  
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(41);
+	delay(500);
+	Sound(0);
+	delay(100);
 }
 
 SensorData GoBack(int backSpeed, SensorData sdata)
