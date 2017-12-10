@@ -9,6 +9,7 @@ void go(int speed);
 SensorData left(int speed, SensorData sdata);
 SensorData straight(int speed, SensorData sdata);
 SensorData right(int speed, SensorData sdata);
+void Gobacksound();
 
 int main(void) {
 	SensorData sdata;
@@ -99,4 +100,36 @@ void CDS(int speed, SensorData sdata)
 		delay(3000);
 		go(speed);
 	}
+}
+
+void Gobacksound()
+{
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(46);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(44);
+	delay(500);
+	Sound(0);
+	delay(100);
+	Sound(41);
+	delay(500);
+	Sound(0);
+	delay(100);
 }
