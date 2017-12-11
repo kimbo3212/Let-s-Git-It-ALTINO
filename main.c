@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Altino.h"
 
+
 #define irsensor1 170          // default + 13
 #define irsensor2 165          // default
 #define irsensor3 190          // default + 30
@@ -129,6 +130,17 @@ void CDS(int speed, SensorData sdata)
 		go(speed);
 	}
 }
+SensorData Back(int speed, SensorData sdata) {
+	Steering(2);
+	speed += 50;
+	speed *= -1;
+	go(speed);
+
+	while (sdata.IRSensor[0] > irsensor3 || sdata.IRSensor[4] > irsensor4) {
+		sdata = Sensor(1);
+		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
+	}
+
 
 SensorData GoBack(int backSpeed, SensorData sdata) {
 	if (sdata.IRSensor[0] == 0 || sdata.IRSensor[1] == 0 || sdata.IRSensor[2] == 0) {
@@ -149,6 +161,7 @@ SensorData Back(int speed, SensorData sdata) {
 
 	return sdata;
 }
+
 void Gobacksound()
 {
 	Sound(44);//��
@@ -364,4 +377,5 @@ void Gobacksound()
 	delay(100);
 	Sound(0);
 	delay(100);
+
 }
