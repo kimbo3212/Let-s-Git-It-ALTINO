@@ -3,12 +3,12 @@
 #include <time.h>
 #include "Altino.h"
 
-#define irsensor1 10          // ±âº»°ª
-#define irsensor2 30          // ±âº»°ª + 13
-#define irsensor3 100          // ±âº»°ª + 30
-#define irsensor4 80          // ÃøÁ¤°ª
-#define irsensor5 120
-#define irsensor6 180
+#define irsensor1 20          // ê¸°ë³¸ê°’
+#define irsensor2 50          // ê¸°ë³¸ê°’ + 13
+#define irsensor3 100          // ê¸°ë³¸ê°’ + 30
+#define irsensor4 60          // ì¸¡ì •ê°’
+#define irsensor5 100
+#define irsensor6 160
 
 #define msensor1 -1830
 #define msensor2 1220
@@ -63,6 +63,8 @@ int main(void) {
 	fprintf(e, "%d\n", end - start);
 	fprintf(r, "%d\n", steer);
 
+	Startsound();
+
 	while (1) {
 		count = 0;
 		if (a - sdata[1].MSensor[0] <= 5 && a - sdata[1].MSensor[0] >= -5) {
@@ -80,14 +82,16 @@ int main(void) {
 		b = sdata[1].MSensor[1];
 
 		printf("%d %d %d %d\n", sdata[0].IRSensor[0], sdata[0].IRSensor[4], sdata[0].MSensor[0], sdata[0].MSensor[1]);
-		if (sdata[0].IRSensor[0] > irsensor3 && sdata[0].IRSensor[4] > irsensor6) {
+
+		if ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[4] > irsensor5) || sdata[0].IRSensor[0] > irsensor3) {
 			Back(speed, sdata);
 		}
-		else if ((sdata[0].IRSensor[0] > irsensor1 && sdata[0].IRSensor[0] <= irsensor2) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor4)) {
+		else if ((sdata[0].IRSensor[0] > irsensor1 && sdata[0].IRSensor[0] <= irsensor2) || (sdata[0].IRSensor[4] <= irsensor6 && sdata[0].IRSensor[4] > irsensor5)) {
 
 			straight(speed, sdata);
 		}
-		else if ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor6 && sdata[0].IRSensor[4] > irsensor5)) {
+		else if ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor5)) {
+
 			right(speed, sdata);
 		}
 		else if (sdata[0].IRSensor[0] <= irsensor1 && sdata[0].IRSensor[4] <= irsensor4) {
@@ -153,10 +157,14 @@ void left(int speed, SensorData sdata[]) {
 
 void straight(int speed, SensorData sdata[]) {
 	Steering(2);
+
+	Led(0x0002);
+	Led(0x0001);
 	steer = 0;
 	go(speed);
 
-	while ((sdata[0].IRSensor[0] > irsensor1 && sdata[0].IRSensor[0] <= irsensor2) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor4)) {
+	while ((sdata[0].IRSensor[0] > irsensor1 && sdata[0].IRSensor[0] <= irsensor2) || (sdata[0].IRSensor[4] <= irsensor6 && sdata[0].IRSensor[4] > irsensor5)) {
+
 		sdata[0] = Sensor(1);
 		sdata[1] = Sensor(2);
 		end = clock();
@@ -197,7 +205,8 @@ void right(int speed, SensorData sdata[]) {
 	Led(0x0010);
 	go(speed);
 
-	while ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor6 && sdata[0].IRSensor[4] > irsensor5)) {
+	while ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor5)) {
+
 		sdata[0] = Sensor(1);
 		sdata[1] = Sensor(2);
 		end = clock();
@@ -255,6 +264,10 @@ void CDS(int speed, SensorData sdata[])
 
 void Back(int speed, SensorData sdata[]) {
 	Steering(1);
+
+	Led(0x0030);
+	Led(0x0040);
+
 	steer = 1;
 	index -= 1;
 	if (index < 0) {
@@ -265,12 +278,14 @@ void Back(int speed, SensorData sdata[]) {
 	speed *= -1;
 	go(speed);
 
-	while (sdata[0].IRSensor[0] > irsensor3 && sdata[0].IRSensor[4] > irsensor6) {
+	while ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[4] > irsensor5) || sdata[0].IRSensor[0] > irsensor3) {
 		sdata[0] = Sensor(1);
 		sdata[1] = Sensor(2);
 		end = clock();
+		/*
 		fprintf(q, "%d\n", sdata[1].MSensor[0]);
-		fprintf(w, "%d\n", sdata[1].MSensor[1]);
+		fprintf(w, "%d\n", sdata[1].MSensor[1]);*/
+
 		fprintf(e, "%d\n", end - start);
 		fprintf(r, "%d\n", steer);
 		count = 0;
