@@ -189,6 +189,7 @@ void Gobacksound()
 	Sound(0);
 	delay(100);
 	Sound(41);
+
 	delay(200);
 	delay(500);
 	Sound(0);
@@ -235,6 +236,7 @@ void Gobacksound()
 	Sound(0);
 	delay(100);
 	Sound(39);
+  
 	delay(400);
 	delay(500);
 	Sound(0);
@@ -243,11 +245,13 @@ void Gobacksound()
 	delay(500);
 	Sound(0);
 	delay(100);
+
 	Sound(41);
 	delay(500);
 	Sound(0);
 	delay(100);
 	Sound(41);
+
 	delay(500);
 	Sound(0);
 	delay(100);
@@ -281,6 +285,7 @@ void Gobacksound()
 	Sound(0);
 	delay(100);
 	Sound(41);
+
 	delay(200);
 	delay(500);
 	Sound(0);
@@ -327,6 +332,7 @@ void Gobacksound()
 	Sound(0);
 	delay(100);
 	Sound(37);
+
 	delay(300);
 
 	delay(500);
@@ -377,7 +383,6 @@ void Gobacksound()
 	delay(100);
 	Sound(0);
 	delay(100);
-
 }
 
 void Startsound() {
