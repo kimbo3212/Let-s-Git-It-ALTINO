@@ -1,61 +1,106 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <time.h>
 #include "Altino.h"
 
-#define irsensor1 10          // default
-#define irsensor2 30          // default + 13
-#define irsensor3 100          // default + 30
-#define irsensor4 80          // collect
-#define irsensor5 160
-#define irsensor6 230
-#define row 1000
-#define col 1000
+#define irsensor1 10          // 기본값
+#define irsensor2 30          // 기본값 + 13
+#define irsensor3 100          // 기본값 + 30
+#define irsensor4 80          // 측정값
+#define irsensor5 120
+#define irsensor6 180
 
-void go(int speed);
-SensorData left(int speed, SensorData sdata);
-SensorData straight(int speed, SensorData sdata);
-SensorData right(int speed, SensorData sdata);
-void CDS(int speed, SensorData sdata);
-SensorData Back(int speed, SensorData sdata);
-void Gobacksound();
-void Startsound();
-double Func(double x, double y);
-double Integral(double start, double end, double y, double(*func)(double a, double b));
+#define msensor1 -1830
+#define msensor2 1220
 
-typedef struct MAP {
+typedef struct {
 	int x;
 	int y;
-}Map;
+}x_y;
 
-static int NumIntervals = 100;
+void go(int speed);
+void left(int speed, SensorData sdata[]);
+void straight(int speed, SensorData sdata[]);
+void right(int speed, SensorData sdata[]);
+void CDS(int speed, SensorData sdata[]);
+void Back(int speed, SensorData sdata[]);
+void Gobacksound();
+void Startsound();
+
+
+int map[100][100] = { 0 };
+int a, b, x = 50, y = 50;
+int count, index = 7;
+int x_go = -1, y_go = 0;
+int start, end;
+int steer;
+FILE *q, *w, *e, *r;
+
+x_y xy[8] = { { -1, 1 },{ 0, 1 },{ 1, 1 },{ 1, 0 },{ 1, -1 },{ 0, -1 },{ -1, -1 },{ -1, 0 } };
 
 int main(void) {
-	SensorData sdata;
+	SensorData sdata[2];
 
 	int speed = 320;
+	steer = 0;
+
+	map[x][y] = 1;
+	q = fopen("mapX.txt", "w+");
+	w = fopen("mapY.txt", "w+");
+	e = fopen("time.txt", "w+");
+	r = fopen("steer.txt", "w+");
 
 	Open(szPort);
 
 	delay(500);
 
+	sdata[0] = Sensor(1);
+	start = clock();
+	sdata[1] = Sensor(2);
+	end = clock();
+	fprintf(q, "%d\n", sdata[1].MSensor[0]);
+	fprintf(w, "%d\n", sdata[1].MSensor[1]);
+	fprintf(e, "%d\n", end - start);
+	fprintf(r, "%d\n", steer);
+
 	while (1) {
-		sdata = Sensor(1);
+		count = 0;
+		if (a - sdata[1].MSensor[0] <= 5 && a - sdata[1].MSensor[0] >= -5) {
+			count++;
+		}
+		if (b - sdata[1].MSensor[1] <= 5 && b - sdata[1].MSensor[1] >= -5) {
+			count++;
+		}
+		if (count == 2) {
+			x += x_go;
+			y += y_go;
+			map[x][y] = 1;
+		}
+		a = sdata[1].MSensor[0];
+		b = sdata[1].MSensor[1];
 
-		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
-		if (sdata.IRSensor[0] > irsensor3 || sdata.IRSensor[4] > irsensor6) {
-			sdata = Back(speed, sdata);
+		printf("%d %d %d %d\n", sdata[0].IRSensor[0], sdata[0].IRSensor[4], sdata[0].MSensor[0], sdata[0].MSensor[1]);
+		if (sdata[0].IRSensor[0] > irsensor3 && sdata[0].IRSensor[4] > irsensor6) {
+			Back(speed, sdata);
 		}
-		else if ((sdata.IRSensor[0] > irsensor1 && sdata.IRSensor[0] <= irsensor2) || (sdata.IRSensor[4] <= irsensor5 && sdata.IRSensor[4] > irsensor4)) {
+		else if ((sdata[0].IRSensor[0] > irsensor1 && sdata[0].IRSensor[0] <= irsensor2) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor4)) {
 
-			sdata = straight(speed, sdata);
+			straight(speed, sdata);
 		}
-		else if ((sdata.IRSensor[0] > irsensor2 && sdata.IRSensor[0] <= irsensor3) || (sdata.IRSensor[4] <= irsensor6 && sdata.IRSensor[4] > irsensor5)) {
-			sdata = right(speed, sdata);
+		else if ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor6 && sdata[0].IRSensor[4] > irsensor5)) {
+			right(speed, sdata);
 		}
-		else if (sdata.IRSensor[0] <= irsensor1 || sdata.IRSensor[4] <= irsensor4) {
-			sdata = left(speed, sdata);
+		else if (sdata[0].IRSensor[0] <= irsensor1 && sdata[0].IRSensor[4] <= irsensor4) {
+			left(speed, sdata);
 		}
+
+		sdata[0] = Sensor(1);
+		sdata[1] = Sensor(2);
+		end = clock();
+		fprintf(q, "%d\n", sdata[1].MSensor[0]);
+		fprintf(w, "%d\n", sdata[1].MSensor[1]);
+		fprintf(e, "%d\n", end - start);
+		fprintf(r, "%d\n", steer);
 	}
 
 	return 0;
@@ -65,58 +110,126 @@ void go(int speed) {
 	Go(speed, speed);
 }
 
-SensorData left(int speed, SensorData sdata) {
+void left(int speed, SensorData sdata[]) {
 	Steering(1);
+	steer = 1;
+	index -= 1;
+	if (index < 0) {
+		index = 7;
+	}
+	x_go = xy[index].x;
+	y_go = xy[index].y;
 	Led(0x0020);
 	go(speed);
 
-	while (sdata.IRSensor[0] <= irsensor1 || sdata.IRSensor[4] <= irsensor4) {
-		sdata = Sensor(1);
-		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
+	while (sdata[0].IRSensor[0] <= irsensor1 && sdata[0].IRSensor[4] <= irsensor4) {
+		sdata[0] = Sensor(1);
+		sdata[1] = Sensor(2);
+		end = clock();
+		fprintf(q, "%d\n", sdata[1].MSensor[0]);
+		fprintf(w, "%d\n", sdata[1].MSensor[1]);
+		fprintf(e, "%d\n", end - start);
+		fprintf(r, "%d\n", steer);
+		count = 0;
+		if (a - sdata[1].MSensor[0] <= 5 && a - sdata[1].MSensor[0] >= -5) {
+			count++;
+		}
+		if (b - sdata[1].MSensor[1] <= 5 && b - sdata[1].MSensor[1] >= -5) {
+			count++;
+		}
+		if (count == 2) {
+			x += x_go;
+			y += y_go;
+			map[x][y] = 1;
+		}
+		a = sdata[1].MSensor[0];
+		b = sdata[1].MSensor[1];
+		printf("%d %d %d %d\n", sdata[0].IRSensor[0], sdata[0].IRSensor[4], sdata[0].MSensor[0], sdata[0].MSensor[1]);
 		CDS(speed, sdata);
 	}
 
 	Led(0x0000);
-
-	return sdata;
 }
 
-SensorData straight(int speed, SensorData sdata) {
+void straight(int speed, SensorData sdata[]) {
 	Steering(2);
+	steer = 0;
 	go(speed);
 
-	while ((sdata.IRSensor[0] > irsensor1 && sdata.IRSensor[0] <= irsensor2) || (sdata.IRSensor[4] <= irsensor5 && sdata.IRSensor[4] > irsensor4)) {
-		sdata = Sensor(1);
-		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
+	while ((sdata[0].IRSensor[0] > irsensor1 && sdata[0].IRSensor[0] <= irsensor2) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor4)) {
+		sdata[0] = Sensor(1);
+		sdata[1] = Sensor(2);
+		end = clock();
+		fprintf(q, "%d\n", sdata[1].MSensor[0]);
+		fprintf(w, "%d\n", sdata[1].MSensor[1]);
+		fprintf(e, "%d\n", end - start);
+		fprintf(r, "%d\n", steer);
+		count = 0;
+		if (a - sdata[1].MSensor[0] <= 5 && a - sdata[1].MSensor[0] >= -5) {
+			count++;
+		}
+		if (b - sdata[1].MSensor[1] <= 5 && b - sdata[1].MSensor[1] >= -5) {
+			count++;
+		}
+		if (count == 2) {
+			x += x_go;
+			y += y_go;
+			map[x][y] = 1;
+		}
+		a = sdata[1].MSensor[0];
+		b = sdata[1].MSensor[1];
+		printf("%d %d %d %d\n", sdata[0].IRSensor[0], sdata[0].IRSensor[4], sdata[0].MSensor[0], sdata[0].MSensor[1]);
 		CDS(speed, sdata);
 	}
 
 	Led(0x0000);
-
-	return sdata;
 }
 
-SensorData right(int speed, SensorData sdata) {
-	int count = 0;
-
+void right(int speed, SensorData sdata[]) {
 	Steering(3);
+	steer = -1;
+	index += 1;
+	if (index > 7) {
+		index = 0;
+	}
+	x_go = xy[index].x;
+	y_go = xy[index].y;
 	Led(0x0010);
 	go(speed);
 
-	while ((sdata.IRSensor[0] > irsensor2 && sdata.IRSensor[0] <= irsensor3) || (sdata.IRSensor[4] <= irsensor6 && sdata.IRSensor[4] > irsensor5)) {
-		sdata = Sensor(1);
-		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
+	while ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor6 && sdata[0].IRSensor[4] > irsensor5)) {
+		sdata[0] = Sensor(1);
+		sdata[1] = Sensor(2);
+		end = clock();
+		fprintf(q, "%d\n", sdata[1].MSensor[0]);
+		fprintf(w, "%d\n", sdata[1].MSensor[1]);
+		fprintf(e, "%d\n", end - start);
+		fprintf(r, "%d\n", steer);
+		count = 0;
+		if (a - sdata[1].MSensor[0] <= 5 && a - sdata[1].MSensor[0] >= -5) {
+			count++;
+		}
+		if (b - sdata[1].MSensor[1] <= 5 && b - sdata[1].MSensor[1] >= -5) {
+			count++;
+		}
+		if (count == 2) {
+			x += x_go;
+			y += y_go;
+			map[x][y] = 1;
+		}
+		a = sdata[1].MSensor[0];
+		b = sdata[1].MSensor[1];
+		printf("%d %d %d %d\n", sdata[0].IRSensor[0], sdata[0].IRSensor[4], sdata[0].MSensor[0], sdata[0].MSensor[1]);
 		CDS(speed, sdata);
 	}
 
 	Led(0x0000);
-
-	return sdata;
 }
 
-void CDS(int speed, SensorData sdata)
+void CDS(int speed, SensorData sdata[])
 {
-	if (sdata.CDSSensor <= 100)
+	int i, j;
+	if (sdata[0].CDSSensor <= 100)
 	{
 		go(0);
 		Led(0x0000);
@@ -124,27 +237,62 @@ void CDS(int speed, SensorData sdata)
 
 		Close(szPort);
 
+		for (i = 0; i < 100; i++) {
+			for (j = 0; j < 100; j++) {
+				if (map[i][j] == 1) {
+					printf("1");
+				}
+				else {
+					printf(" ");
+				}
+			}
+			printf("\n");
+		}
+
 		exit(0);
 	}
 }
 
-SensorData Back(int speed, SensorData sdata) {
+void Back(int speed, SensorData sdata[]) {
 	Steering(1);
+	steer = 1;
+	index -= 1;
+	if (index < 0) {
+		index = 7;
+	}
+	x_go = xy[index].x;
+	y_go = xy[index].y;
 	speed *= -1;
 	go(speed);
 
-	while (sdata.IRSensor[0] > irsensor3 || sdata.IRSensor[4] > irsensor6) {
-		sdata = Sensor(1);
-		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
+	while (sdata[0].IRSensor[0] > irsensor3 && sdata[0].IRSensor[4] > irsensor6) {
+		sdata[0] = Sensor(1);
+		sdata[1] = Sensor(2);
+		end = clock();
+		fprintf(q, "%d\n", sdata[1].MSensor[0]);
+		fprintf(w, "%d\n", sdata[1].MSensor[1]);
+		fprintf(e, "%d\n", end - start);
+		fprintf(r, "%d\n", steer);
+		count = 0;
+		if (a - sdata[1].MSensor[0] <= 5 && a - sdata[1].MSensor[0] >= -5) {
+			count++;
+		}
+		if (b - sdata[1].MSensor[1] <= 5 && b - sdata[1].MSensor[1] >= -5) {
+			count++;
+		}
+		if (count == 2) {
+			x += x_go;
+			y += y_go;
+			map[x][y] = 1;
+		}
+		a = sdata[1].MSensor[0];
+		b = sdata[1].MSensor[1];
+		printf("%d %d %d %d\n", sdata[0].IRSensor[0], sdata[0].IRSensor[4], sdata[0].MSensor[0], sdata[0].MSensor[1]);
 		CDS(-speed, sdata);
 	}
-
-	return sdata;
 }
 
-
 void Gobacksound() {
-
 	Sound(44);
 	delay(100);
 	Sound(0);
@@ -415,21 +563,4 @@ void Startsound() {
 	Sound(0);
 	delay(50);
 
-}
-
-double Func(double x, double y) {
-	return 1.0 / (1.0 - pow(x, y));
-}
-
-double Integral(double start, double end, double y, double(*func)(double a, double b)) {
-	double ans = 0.0;
-	double dx = ((end - start) / (NumIntervals + 1));
-	int i;
-
-	for (int i = 0; i < NumIntervals; i++) {
-		ans += func(start + i * dx, y);
-	}
-	ans *= dx;
-
-	return ans;
 }
