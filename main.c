@@ -164,187 +164,193 @@ SensorData Back(int speed, SensorData sdata) {
 
 void Gobacksound()
 {
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
+
 	delay(200);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(1000);
 	Sound(0);
 	delay(100);
 
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(39);//��
+	Sound(39);
+  
 	delay(400);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+
+	Sound(41);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
+
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(39);//��
+	Sound(39);
 	delay(2000);
 	Sound(0);
 	delay(100);
 
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
+
 	delay(200);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(46);//��
+	Sound(46);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(44);//��
+	Sound(44);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(1000);
 	Sound(0);
 	delay(100);
 
-	Sound(44);//��
+	Sound(44);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(39);//��
+	Sound(39);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(100);
 	Sound(0);
 	delay(100);
-	Sound(37);//��
+	Sound(37);
+
 	delay(300);
 
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(39);//��
+	Sound(39);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(41);//��
+	Sound(41);
 	delay(500);
 	Sound(0);
 	delay(100);
-	Sound(37);//��
+	Sound(37);
 	delay(1500);
 	Sound(0);
 	delay(100);
@@ -377,5 +383,55 @@ void Gobacksound()
 	delay(100);
 	Sound(0);
 	delay(100);
+}
+
+void Startsound() {
+
+	Sound(41);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(41);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(41);
+	delay(400);
+	Sound(0);
+	delay(50);
+
+	Sound(41);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(41);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(41);
+	delay(400);
+	Sound(0);
+	delay(50);
+
+	Sound(41);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(44);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(37);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(39);
+	delay(200);
+	Sound(0);
+	delay(50);
+	Sound(41);
+	delay(800);
+	Sound(0);
+	delay(50);
 
 }
