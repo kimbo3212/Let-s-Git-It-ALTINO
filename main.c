@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "Altino.h"
 
-#define irsensor1 170          // �⺻�� + 13
-#define irsensor2 165          // �⺻��
-#define irsensor3 190          // �⺻�� + 30
-#define irsensor4 600          // �����
+
+#define irsensor1 170          // default + 13
+#define irsensor2 165          // default
+#define irsensor3 190          // default + 30
+#define irsensor4 600          // collect
 #define irsensor5 400
 
 void go(int speed);
@@ -20,6 +21,7 @@ int main(void) {
 	SensorData sdata;
 
 	int speed = 300;
+	int backSpeed = (-1)*speed;
 
 	Open(szPort);
 
@@ -42,6 +44,7 @@ int main(void) {
 		else if (sdata.IRSensor[0] <= irsensor2 && sdata.IRSensor[4] <= irsensor5) {
 			sdata = left(speed, sdata);
 		}
+		GoBack(backSpeed, sdata);
 	}
 
 	go(0);
@@ -138,7 +141,27 @@ SensorData Back(int speed, SensorData sdata) {
 		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
 	}
 
+
+SensorData GoBack(int backSpeed, SensorData sdata) {
+	if (sdata.IRSensor[0] == 0 || sdata.IRSensor[1] == 0 || sdata.IRSensor[2] == 0) {
+		sdata = straight(backSpeed, sdata);
+		delay(700);
+	}
+}
+SensorData Back(int speed, SensorData sdata) {
+	Steering(2);
+	speed += 50;
+	speed *= -1;
+	go(speed);
+
+	while (sdata.IRSensor[0] > irsensor3 || sdata.IRSensor[4] > irsensor4) {
+		sdata = Sensor(1);
+		printf("%d %d %d %d\n", sdata.IRSensor[0], sdata.IRSensor[4], sdata.IRSensor[2], sdata.CDSSensor);
+	}
+
 	return sdata;
+}
+
 void Gobacksound()
 {
 	Sound(44);//��
@@ -202,11 +225,11 @@ void Gobacksound()
 	Sound(44);//��
 	delay(100);
 	Sound(0);
-	delay(100); 
+	delay(100);
 	Sound(41);//��
 	delay(100);
 	Sound(0);
-	delay(100); 
+	delay(100);
 	Sound(41);//��
 	delay(100);
 	Sound(0);
@@ -219,11 +242,11 @@ void Gobacksound()
 	Sound(44);//��
 	delay(500);
 	Sound(0);
-	delay(100); 
+	delay(100);
 	Sound(41);//��
 	delay(500);
 	Sound(0);
-	delay(100); 
+	delay(100);
 	Sound(41);//��
 	delay(500);
 	Sound(0);
@@ -232,7 +255,7 @@ void Gobacksound()
 	delay(2000);
 	Sound(0);
 	delay(100);
-	
+
 	Sound(44);//��
 	delay(100);
 	Sound(0);
@@ -305,7 +328,7 @@ void Gobacksound()
 	delay(100);
 	Sound(37);//��
 	delay(300);
-  
+
 	delay(500);
 	Sound(0);
 	delay(100);
@@ -325,7 +348,7 @@ void Gobacksound()
 	delay(1500);
 	Sound(0);
 	delay(100);
-  
+
 	Sound(44);
 	delay(100);
 	Sound(0);
@@ -354,5 +377,5 @@ void Gobacksound()
 	delay(100);
 	Sound(0);
 	delay(100);
-}
+
 }
