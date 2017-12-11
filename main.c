@@ -3,10 +3,10 @@
 #include <time.h>
 #include "Altino.h"
 
-#define irsensor1 20          // ±âº»°ª
-#define irsensor2 50          // ±âº»°ª + 13
-#define irsensor3 100          // ±âº»°ª + 30
-#define irsensor4 60          // ÃøÁ¤°ª
+#define irsensor1 20          // ê¸°ë³¸ê°’
+#define irsensor2 50          // ê¸°ë³¸ê°’ + 13
+#define irsensor3 100          // ê¸°ë³¸ê°’ + 30
+#define irsensor4 60          // ì¸¡ì •ê°’
 #define irsensor5 100
 #define irsensor6 160
 
@@ -82,6 +82,7 @@ int main(void) {
 		b = sdata[1].MSensor[1];
 
 		printf("%d %d %d %d\n", sdata[0].IRSensor[0], sdata[0].IRSensor[4], sdata[0].MSensor[0], sdata[0].MSensor[1]);
+
 		if ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[4] > irsensor5) || sdata[0].IRSensor[0] > irsensor3) {
 			Back(speed, sdata);
 		}
@@ -90,6 +91,7 @@ int main(void) {
 			straight(speed, sdata);
 		}
 		else if ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor5)) {
+
 			right(speed, sdata);
 		}
 		else if (sdata[0].IRSensor[0] <= irsensor1 && sdata[0].IRSensor[4] <= irsensor4) {
@@ -155,12 +157,14 @@ void left(int speed, SensorData sdata[]) {
 
 void straight(int speed, SensorData sdata[]) {
 	Steering(2);
+
 	Led(0x0002);
 	Led(0x0001);
 	steer = 0;
 	go(speed);
 
 	while ((sdata[0].IRSensor[0] > irsensor1 && sdata[0].IRSensor[0] <= irsensor2) || (sdata[0].IRSensor[4] <= irsensor6 && sdata[0].IRSensor[4] > irsensor5)) {
+
 		sdata[0] = Sensor(1);
 		sdata[1] = Sensor(2);
 		end = clock();
@@ -202,6 +206,7 @@ void right(int speed, SensorData sdata[]) {
 	go(speed);
 
 	while ((sdata[0].IRSensor[0] > irsensor2 && sdata[0].IRSensor[0] <= irsensor3) || (sdata[0].IRSensor[4] <= irsensor5 && sdata[0].IRSensor[4] > irsensor5)) {
+
 		sdata[0] = Sensor(1);
 		sdata[1] = Sensor(2);
 		end = clock();
@@ -259,8 +264,10 @@ void CDS(int speed, SensorData sdata[])
 
 void Back(int speed, SensorData sdata[]) {
 	Steering(1);
+
 	Led(0x0030);
 	Led(0x0040);
+
 	steer = 1;
 	index -= 1;
 	if (index < 0) {
@@ -278,6 +285,7 @@ void Back(int speed, SensorData sdata[]) {
 		/*
 		fprintf(q, "%d\n", sdata[1].MSensor[0]);
 		fprintf(w, "%d\n", sdata[1].MSensor[1]);*/
+
 		fprintf(e, "%d\n", end - start);
 		fprintf(r, "%d\n", steer);
 		count = 0;
